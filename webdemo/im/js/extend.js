@@ -1,170 +1,194 @@
 var ExtendsFn = {
-    init:function(){
-        this.arr = {
-            /*  第一次加载进来的时候为true点击的时候就能够点击加载ajax了*/
-            XYBG:true, // 信用报告
-            showjt:true,// 显示借条
-            showqt:true,// 显示欠条
-            showzz:true// 显示转账记录
-        }
-    },
-    showZZ: function (phone,ev) {     //展示转账记录
-        this.prevent("showzz","zhuanzhang");
-    },
-    showXYBG: function (phone) {  //展示信用报告
-        this.prevent("XYBG","xiyongbaogao");
-    },
-    hideXYBG: function (event) { // 隐藏信用报告
-        $("#"+event).remove(); // 因为后面是ajax动态加载的所以每次关闭的时候要直接remove掉元素
-          for(var key in this.arr){
-              if(this.arr[key] == false){ // 检测哪一条数据是被false了的，为了确保下一次能够点击将他变为true
-                this.arr[key] = true;
-              }
-          }
-    },
-    showJT: function (id) {     //展示借条
-        this.prevent("showjt","jiekuanxiangqingyifangkuan");
-    },
-     showQT: function (id) {     //展示欠条
-        this.prevent("showqt","qiantiao");
-    },
-    prevent:function(onOff,url){ 
-      if(this.arr[onOff]){
-          this.ajaxinIt(url);
-          this.arr[onOff]=false;// 防止重复点击
-      }
-    },
-    ajaxinIt:function(url){
-        $.ajax({
-          url : "/webnim/"+url+".json",
-          dataType : 'json',
-          success : function (data){
-            switch(url){ // 借款详情已放款
-              case "jiekuanxiangqingyifangkuan" :
-                var str = ` <div class="extends-Loandetails" id="extends-released">
-                            <div class="LoandetailsHead">
-                                <img src="./images/Loan.png" alt="Alternate Text">
-                                <p class="loan">借款详情</p>
-                                <a onclick="javascript:ExtendsFn.hideXYBG('extends-released');" class="close">X</a>
-                            </div>
-                            <div class="loandetailsContent">
-                                <div class="iconphoto"></div>
-                                <p class="Loan-send">${data.state}</p>
-                                <p class="iconText">￥${data.capital}.00</p>
-                                <ul>
-                                    <li>本金: <span>${data.capital}.00</span></li>
-                                    <li>年利率: <span>${data.rate}%</span></li>
-                                    <li>其他费用: <span>${data.otherMoney}.00</span></li>
-                                    <li>借款时间: <span>20${data.startDate} 09:35:12</span></li>
-                                    <li>到期时间: <span>20${data.endDate} 09:35:12</span></li>
-                                </ul>
-                            </div>
-                        </div>` ;
-                $("#chatBox").append(str);
-                  break;
-              case "qiantiao" : // 欠条
-                    var str = `<div class="extends-Loandetails transfer" id="extends-Transfer">
-                    <div class="LoandetailsHead">
-                        <img src="./images/Loan.png" alt="转账详情" />
-                        <p class="loan">欠条详情</p>
-                        <a onclick="javascript:ExtendsFn.hideXYBG('extends-Transfer');" class="close">X</a>
-                    </div>
-                    <div class="loandetailsContent">
-                        <div class="iconphoto"></div>
-                        <p class="Loan-send">已放款</p>
-                        <p class="iconText">￥${data.capital}.00</p>
-                        <ul>
-                            <li>本金: <span>${data.capital}.00</span></li>
-                            <li>年利率: <span>${data.rate}%</span></li>
-                            <li>其他费用:<span>${data.otherMoney}.00</span></li>
-                            <li>借款时间: <span>20${data.startDate} 09:35:12</span></li>
-                            <li>到期日期: <span>20${data.endDate}  09:35:12</span></li>
-                        </ul>
-                    </div>
-                </div>`;
-            $("#chatBox").append(str);
-                 break;
-              case "xiyongbaogao" : // 信用报告
-                    var str = `<div class="extends-netcall-dialog" id="extend-dialog-netcall">
-                    <div class="netcall-dialog-head">
-                        <img src="./images/details.jpg" alt="Alternate Text">
-                        <p class="details">信用报告</p>
-                        <a onclick="javascript:ExtendsFn.hideXYBG('extend-dialog-netcall');" class="close">X</a>
-                    </div>
-                    <div class="netcall-dialog-content">
-                        <ul>
-                            <li class="font16 fontWight">个人基本信息</li>
-                            <li>姓名: ${data.name}</li>
-                            <li>身份证号: ${data.ID}</li>
-                            <li>申请编号: ${data.applyNum}</li>
-                            <li>报告时间: ${data.date} 10:44:55</li>
-                            <li class="font16 fontWight">风险排查</li>
-                            <li>[${data.fenxianOne}]</li>
-                            <li>[${data.fenxianTwo}]</li>
-                        </ul>
-                        <span class="more"></span>
-                    </div>
-                </div>`;
-                  $("#chatBox").append(str);
-                  break;
-              case "jiekuanxiangqingyiyuqi" : // 借款详情已逾期
-                    var str = `<div class="extends-Loandetails2 extends-Loandetails" id="extends-Loandetails2">
-                    <div class="LoandetailsHead">
-                        <img src="./images/Loan.png" alt="Alternate Text" />
-                        <p class="loan">借款详情</p>
-                        <a onclick="javascript:ExtendsFn.hideXYBG('extends-Loandetails2');" class="close">X</a>
-                    </div>
-                    <div class="loandetailsContent">
-                        <div class="iconphoto"></div>
-                        <p class="Loan-send">${data.state}7天</p>
-                        <p class="iconText">￥${data.capital}.00</p>
-                        <ul>
-                            <li>本金: <span>${data.capital}.00</span></li>
-                            <li>年利率: <span>${data.rate}%</span></li>
-                            <li>其他费用: <span>${data.otherMoney}.00</span></li>
-                            <li>借款时间: <span>${data.startDate} 09:35:12</span></li>
-                            <li>到期时间: <span>${data.endDate} 09:35:12</span></li>
-                        </ul>
-                    </div>
-                    <div class="loanfoot">
-                        <a href="javascript:;">销账</a>
-                        <a href="javascript:;" class="active">展期</a>
-                    </div>
-                 </div>`;
-                  $("#chatBox").append(str);
-                  break;
-              case "zhuanzhang" : // 展示转账记录
-                  var str =   `<div class="extends-Loandetails accounts" id="extends-Loandetails">
-                  <div class="LoandetailsHead">
-                      <img src="./images/Loan.png" alt="转账详情" />
-                      <p class="loan">欠条详情</p>
-                      <a onclick="javascript:ExtendsFn.hideXYBG('extends-Loandetails');" class="close">X</a>
-                  </div>
-                  <div class="loandetailsContent">
-                      <div class="iconphoto"></div>
-                      <p class="Loan-send">已收款</p>
-                      <p class="iconText">￥500.00</p>
-                      <ul>
-                          <li>转给: <span>${data.name}</span></li>
-                          <li>备注: <span>${data.note}</span></li>
-                          <li>时间:<span>20${data.date} 09:35:12</span></li>
-                      </ul>
-                  </div>
-              </div>`;
-                   $("#chatBox").append(str);
-                   break;
-            }
-          }
-
-  });
+  Transfer: null,
+  creditUrl: null,
+  released: null,
+  IOU: null,
+  details: null,
+  urldata: {
+    Transfer: "webnim/zhuanzhang.json",
+    creditUrl: "webnim/xiyongbaogao.json",
+    released: "webnim/jiekuanxiangqingyifangkuan.json",
+    IOU: "webnim/qiantiao.json",
+    details: "webnim/jiekuanxiangqingyiyuqi.json"
+  },
+  creatMark: function () {
+    $(document.body).append('<div class="mark"></div>'); // 遮罩层
+  }, // 获取请求文件类型
+  dataTypes: function (url) {
+    var arr = url.split("."),type = arr[1];
+    return type;
+  },
+  showZZ: function (phone, ev) { //展示转账记录
+    this.creatMark();
+    this.prevent(this.urldata.Transfer, this.dataTypes(this.urldata.Transfer));
+  },
+  showXYBG: function (phone) { //展示信用报告
+    this.creatMark();
+    this.prevent(this.urldata.creditUrl, this.dataTypes(this.urldata.creditUrl));
+  },
+  hideXYBG: function (event) { // 隐藏信用报告
+    $(".mark").remove();
+    $("#" + event).remove(); // 因为后面是ajax动态加载的所以每次关闭的时候要直接remove掉元素
+  },
+  showJT: function (id) { //展示借条
+    this.creatMark(); // 创建遮罩层
+    this.prevent(this.urldata.released, this.dataTypes(this.urldata.released));
+  },
+  showQT: function (id) { //展示欠条
+    this.creatMark();
+    this.prevent(this.urldata.IOU, this.dataTypes(this.urldata.IOU));
+  },
+  prevent: function (url, type) {
+    this.getData(url, type); // ajax获取
+  },
+  appends: function (str) {
+    $("#chatBox").append(str);
+  },
+  render: function (url, data, type) {
+    var html = "";
+    switch (url) { // 借款详情已放款
+      case "webnim/jiekuanxiangqingyifangkuan" + "." + type:
+        html = '<div class="extends-Loandetails" id="extends-released">' +
+          '       <div class="LoandetailsHead">' +
+          '          <img src="./images/Loan.png" alt="Alternate Text">' +
+          '          <p class="loan">借款详情</p>' +
+          '         <a onclick="javascript:ExtendsFn.hideXYBG(\'extends-released\');" class="close">X</a>' +
+          '      </div>' +
+          '      <div class="loandetailsContent">' +
+          '          <div class="iconphoto"></div>' +
+          '          <p class="Loan-send">' + data.state + '</p>' +
+          '          <p class="iconText">￥' + data.capital + '.00</p>' +
+          '          <ul>' +
+          '             <li>本金: <span>' + data.capital + '.00</span></li>' +
+          '              <li>年利率: <span>' + data.rate + '%</span></li>' +
+          '              <li>其他费用: <span>' + data.otherMoney + '.00</span></li>' +
+          '              <li>借款时间: <span>20' + data.startDate + ' 09:35:12</span></li>' +
+          '              <li>到期时间: <span>20' + data.endDate + ' 09:35:12</span></li>' +
+          '          </ul>' +
+          '      </div>' +
+          '  </div>';
+        this.appends(html);
+        break;
+      case "webnim/qiantiao" + "." + type: // 欠条
+        html = '<div class="extends-Loandetails transfer" id="extends-Transfer">' +
+          '         <div class="LoandetailsHead">' +
+          '        <img src="./images/Loan.png" alt="转账详情" />' +
+          '      <p class="loan">欠条详情</p>' +
+          '      <a onclick="javascript:ExtendsFn.hideXYBG(\'extends-Transfer\');" class="close">X</a>' +
+          '  </div>' +
+          '  <div class="loandetailsContent">' +
+          '      <div class="iconphoto"></div>' +
+          '      <p class="Loan-send">已放款</p>' +
+          '      <p class="iconText">￥' + data.capital + '.00</p>' +
+          '      <ul>' +
+          '          <li>本金: <span>' + data.capital + '.00</span></li>' +
+          '          <li>年利率: <span>' + data.capital + '%</span></li>' +
+          '          <li>其他费用:<span>' + data.otherMoney + '.00</span></li>' +
+          '          <li>借款时间: <span>20' + data.startDate + ' 09:35:12</span></li>' +
+          '          <li>到期日期: <span>20' + data.endDate + '  09:35:12</span></li>' +
+          '      </ul>' +
+          '  </div>' +
+          '</div>';
+        this.appends(html);
+        break;
+      case "webnim/xiyongbaogao" + "." + type: // 信用报告
+        html = '<div class="extends-netcall-dialog" id="extend-dialog-netcall">' +
+          '<div class="netcall-dialog-head">' +
+          '     <img src="./images/details.jpg" alt="Alternate Text">' +
+          '     <p class="details">信用报告</p>' +
+          '           <a onclick="javascript:ExtendsFn.hideXYBG(\'extend-dialog-netcall\');" class="close">X</a>' +
+          '       </div>' +
+          '       <div class="netcall-dialog-content">' +
+          '           <ul>' +
+          '               <li class="font16 fontWight">个人基本信息</li>' +
+          '               <li>姓名: ' + data.name + '</li>' +
+          '               <li>身份证号: ' + data.ID + '</li>' +
+          '               <li>申请编号: ' + data.applyNum + '</li>' +
+          '               <li>报告时间: ' + data.date + ' 10:44:55</li>' +
+          '               <li class="font16 fontWight">风险排查</li>' +
+          '               <li>[' + data.fenxianOne + ']</li>' +
+          '              <li>[' + data.fenxianTwo + ']</li>' +
+          '           </ul>' +
+          '           <span class="more"></span>' +
+          '       </div>' +
+          '   </div>';
+        this.appends(html);
+        break;
+      case "webnim/jiekuanxiangqingyiyuqi" + "." + type: // 借款详情已逾期
+        html = '<div class="extends-Loandetails2 extends-Loandetails" id="extends-Loandetails2">' +
+          ' <div class="LoandetailsHead">' +
+          '           <img src="./images/Loan.png" alt="Alternate Text" />' +
+          '           <p class="loan">借款详情</p>' +
+          '           <a onclick="javascript:ExtendsFn.hideXYBG(\'extends-Loandetails2\');" class="close">X</a>' +
+          '       </div>' +
+          '       <div class="loandetailsContent">' +
+          '           <div class="iconphoto"></div>' +
+          '           <p class="Loan-send">' + data.state + '7天</p>' +
+          '           <p class="iconText">￥' + data.capital + '.00</p>' +
+          '           <ul>' +
+          '               <li>本金: <span>' + data.capital + '.00</span></li>' +
+          '               <li>年利率: <span>' + data.rate + '%</span></li>' +
+          '               <li>其他费用: <span>' + data.otherMoney + '.00</span></li>' +
+          '               <li>借款时间: <span>' + data.startDate + ' 09:35:12</span></li>' +
+          '               <li>到期时间: <span>' + data.endDate + ' 09:35:12</span></li>' +
+          '           </ul>' +
+          '       </div>' +
+          '       <div class="loanfoot">' +
+          '           <a href="javascript:;">销账</a>' +
+          '           <a href="javascript:;" class="active">展期</a>' +
+          '       </div>' +
+          '    </div>';
+        this.appends(html)
+        break;
+      case "webnim/zhuanzhang" + "." + type: // 展示转账记录
+        html = '<div class="extends-Loandetails accounts" id="extends-Loandetails">' +
+          '<div class="LoandetailsHead">' +
+          '          <img src="./images/Loan.png" alt="转账详情" />' +
+          '          <p class="loan">欠条详情</p>' +
+          '          <a onclick="javascript:ExtendsFn.hideXYBG(\'extends-Loandetails\');" class="close">X</a>' +
+          '      </div>' +
+          '      <div class="loandetailsContent">' +
+          '         <div class="iconphoto"></div>' +
+          '          <p class="Loan-send">已收款</p>' +
+          '          <p class="iconText">￥500.00</p>' +
+          '          <ul>' +
+          '              <li>转给: <span>' + data.name + '</span></li>' +
+          '              <li>备注: <span>' + data.note + '</span></li>' +
+          '              <li>时间:<span>20' + data.date + ' 09:35:12</span></li>' +
+          '          </ul>' +
+          '      </div>' +
+          '  </div>';
+        this.appends(html);
+        break;
     }
-};
+  },
+  getData: function (urls, type) {
+    var $this = this;
+    if (!type) {
+      alert("请求文件类型有误");
+      $(".mark").remove();
+      return false;
+    } else {
+      $.ajax({
+        url: "/" + urls,
+        Type: type,
+        success: function (data) {
+          $this.render(urls, data, type);
+        },
+        error: function () {
+          alert("数据请求失败r...");
+          $(".mark").remove();
+        }
+      });
+    }
+  }
+}
 var ExtendTransference = {
   showTransference: function () {
     $("#extend-transference-iframe")
-    .attr('src', function (index, value) {
-      return value ? '' : './transference/transference.html';
-    });
+      .attr('src', function (index, value) {
+        return value ? '' : './transference/transference.html';
+      });
     $("#extend-transference").toggleClass("extend-close")
   },
   //移除客户 （只是页面上和本地数据中删除，并不处理后台数据，后台数据在后台修改）
@@ -187,8 +211,8 @@ var ExtendSearch = {
   search: function (_this) {
     var self = this;
     self.refreshData();
-    var keyword = _this.value;  //获取关键字
-    
+    var keyword = _this.value; //获取关键字
+
     //遍历对比
     for (var person in self.personlist) {
       var result = self.personlist[person].nick.indexOf(keyword) + person.indexOf(keyword);
@@ -197,9 +221,9 @@ var ExtendSearch = {
 
     $('#friends>ul>li').each(function (index, dom) {
       $(this).attr('data-account', function (index, attr) {
-        
+
         // console.log(self.list.indexOf(attr));
-        
+
         switch (self.list.indexOf(attr)) {
           case -1:
             // console.log(this);
@@ -208,7 +232,7 @@ var ExtendSearch = {
           default:
             // console.log(this);
             $(this).attr('class', 'panel_item');
-        }      
+        }
       });
     });
 
@@ -253,8 +277,7 @@ var ExtendQuickSend = {
     var data = localStorage.getItem("quickSend");
     if (!data || data == '{}') {
       this.content = {};
-    }
-    else {
+    } else {
       this.content = JSON.parse(data);
     }
     var htmlStr = "";
@@ -314,16 +337,16 @@ var ExtendQuickSend = {
     var htmlStr = '<li class="list-item" title="' + content + '" id="extends-QuickSend-' + index + '" ondblclick="javascript: ExtendQuickSend.send(this);">' +
       '<p class="item-content">' + content + '</p>' +
       '<div class="item-operation">' +
-        '<div class="operation-group">' +
-          '<div class="iconfont-wrap" title="修改" data-index="' + index + '" onclick="javascript: ExtendQuickSend.modify(this);">' +
-            '<i class="iconfont icon-xiugai-copy"></i>' +
-          '</div>' +
-          '<div class="iconfont-wrap" title="删除" data-index="' + index + '" onclick="javascript: ExtendQuickSend.remove(this);">' +
-            '<i class="iconfont icon-shanchu3"></i>' +
-          '</div>' +
-        '</div>' +
+      '<div class="operation-group">' +
+      '<div class="iconfont-wrap" title="修改" data-index="' + index + '" onclick="javascript: ExtendQuickSend.modify(this);">' +
+      '<i class="iconfont icon-xiugai-copy"></i>' +
       '</div>' +
-    '</li>';
+      '<div class="iconfont-wrap" title="删除" data-index="' + index + '" onclick="javascript: ExtendQuickSend.remove(this);">' +
+      '<i class="iconfont icon-shanchu3"></i>' +
+      '</div>' +
+      '</div>' +
+      '</div>' +
+      '</li>';
     return htmlStr;
   },
 }
@@ -333,33 +356,37 @@ var ExtendInfomessages = {
   onOff: true,
   quickDom: null,
   messageDom: null,
-  init: function(event) {
-        // 阻止冒泡防止点击的时候会把事件传向父级元素
-        event.stopPropagation();
-        // 获取快捷回复元素
-        this.quickDom = document.getElementById("extend-quick-message-list");
-        // 获取聊天框
-        this.messageDom = document.getElementById("messageText");
-        // 用于给聊天框设定位置以及点击显示隐藏
-        this.eventsDom(this.quickDom, this.messageDom);
-        // 添加快捷用语
-        this.initMessageList(this.quickDom, this.messageDom);
-        // 点击其他元素隐藏快捷用语
-        this.clickHideMessge(this.quickDom)
+  init: function (event) {
+    // 阻止冒泡防止点击的时候会把事件传向父级元素
+    event.stopPropagation();
+    // 获取快捷回复元素
+    this.quickDom = document.getElementById("extend-quick-message-list");
+    // 获取聊天框
+    this.messageDom = document.getElementById("messageText");
+    // 用于给聊天框设定位置以及点击显示隐藏
+    this.eventsDom(this.quickDom, this.messageDom);
+    // 添加快捷用语
+    this.initMessageList(this.quickDom, this.messageDom);
+    // 点击其他元素隐藏快捷用语
+    this.clickHideMessge(this.quickDom)
   },
-  initMessageList: function(quickDom, messageDom) {
+  initMessageList: function (quickDom, messageDom) {
     var arrList = ["快捷回复11111111", "快捷回复22221222", "快捷回复33333333", "快捷回复44444444", "快捷回复55555555"];
-    var html = "",ullist = quickDom.children[0],$this = this;
+    var html = "",
+      ullist = quickDom.children[0],
+      $this = this;
     for (var i = 0; i < arrList.length; i++) {
       html += '<li onclick="ExtendInfomessages.addClick(this)">' + arrList[i] + '</li>'
     };
     ullist.innerHTML = html;
   },
-  addClick:function($this){
+  addClick: function ($this) {
     $("#messageText").val($this.innerText);
   },
-  eventsDom: function(quickDom, messageDom) {
-    var left = messageDom.offsetLeft, top = messageDom.offsetTop,cName = quickDom.className;
+  eventsDom: function (quickDom, messageDom) {
+    var left = messageDom.offsetLeft,
+      top = messageDom.offsetTop,
+      cName = quickDom.className;
     quickDom.style.left = left + 'px';
     if (this.onOff) {
       $(quickDom).removeClass("hide");
@@ -368,16 +395,18 @@ var ExtendInfomessages = {
     }
     this.onOff = !this.onOff;
   },
-  getStyle: function(obj, attr) {
+  getStyle: function (obj, attr) {
     if (obj.currentStyle) {
       return obj.currentStyle[attr]
     } else {
       return getComputedStyle(obj, false)[attr]
     }
   },
-  clickHideMessge: function(obj) {
-    var wrapper = document.body.children[1],chatContent = document.getElementById("chatContent"),cName = obj.className;
-    wrapper.onclick = chatContent.onclick = function() {
+  clickHideMessge: function (obj) {
+    var wrapper = document.body.children[1],
+      chatContent = document.getElementById("chatContent"),
+      cName = obj.className;
+    wrapper.onclick = chatContent.onclick = function () {
       $(obj).addClass("hide");
     }
   }
@@ -389,27 +418,27 @@ var ExtendInformationReport = {
     var account = yunXin.crtSessionAccount;
     $('#extends-information-report-content').removeClass('hide');
   },
-  close: function () {  //关闭
+  close: function () { //关闭
     $('#extends-information-report-content').addClass('hide');
   },
-  fillContent: function (data) {  //插入html
+  fillContent: function (data) { //插入html
     var htmlStr = '<li class="table-item">' +
       '<div class="item-unit">状态</div>' +
       '<div class="item-unit">笔数</div>' +
       '<div class="item-unit">金额</div>' +
-    '</li>';
+      '</li>';
 
     for (var i = 0; i < data.length; i++) {
       htmlStr += this.setHtml(data[i]);
     }
     $('#extends-information-report-content-table').html(htmlStr);
   },
-  setHtml: function (data) {    //设置html字符串
+  setHtml: function (data) { //设置html字符串
     return '<li class="table-item">' +
       '<div class="item-unit">' + data.state + '</div>' +
       '<div class="item-unit">' + data.count + '</div>' +
       '<div class="item-unit">' + data.money + '</div>' +
-    '</li>';
+      '</li>';
   }
 }
 
@@ -417,8 +446,4 @@ var ExtendInformationReport = {
 
 window.onload = function () {
   ExtendQuickSend.init();
-  ExtendsFn.init();
 }
-
-
-
