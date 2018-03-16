@@ -1,0 +1,489 @@
+.box-content,
+.box-title {
+  width: 100%;
+  float: left;
+}
+
+.box-content .box-content-icon {
+  /* float: left; */
+  position: absolute;
+  transform: translate(-50%, 0%);
+  margin-left: 20px;
+}
+
+.box-content-icon i {
+  font-size: 25px;
+  color: #fff;
+}
+
+.box-content-inner {
+  float: left;
+  margin-left: 45px;
+}
+
+.box-content-inner span {
+  display: inline-block;
+  float: left;
+  width: 100%;
+  color: #fff;
+}
+
+.box-content-inner span:first-child {
+  font-size: 14px;
+}
+
+.box-content-inner span:last-child {
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.msg-idcard .portrait {
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  margin: 0;
+}
+
+.item-you .msg-transfer,
+.item-you .msg-receipt,
+.item-you .msg-creditReport,
+.item-you .msg-owe,
+.item-you .msg-idcard {
+  /* width: 40%; */
+  float: left;
+  color: #6b8299;
+  /* background: #fff; */
+  border-color: #eee;
+}
+
+.msg-transfer,
+.msg-receipt,
+.msg-creditReport,
+.msg-owe,
+.msg-idcard {
+  padding: 0;
+  width: 100%;
+  display: inline-block;
+  border-radius: 5px;
+}
+
+.msg-transfer .box-content,
+.msg-receipt .box-content,
+.msg-creditReport .box-content,
+.msg-owe .box-content,
+.msg-idcard .box-content {
+  padding: 10px 0 10px 0;
+  position: relative;
+  min-height: 30px;
+}
+
+.msg-transfer .icon,
+.msg-receipt .icon,
+.msg-creditReport .icon,
+.msg-owe .icon,
+.msg-idcard .icon {
+  background-image: none;
+  width: auto;
+  height: auto;
+}
+
+.msg-transfer .box-title,
+.msg-receipt .box-title,
+.msg-creditReport .box-title,
+.msg-owe .box-title,
+.msg-idcard .box-title {
+  height: 30px;
+  line-height: 30px;
+  background-color: #fff;
+  font-size: 14px;
+  color: #333;
+  font-size: 14px;
+  /* padding-left: 10px; */
+}
+
+.msg-transfer .box-title span,
+.msg-receipt .box-title span,
+.msg-creditReport .box-title span,
+.msg-owe .box-title span,
+.msg-idcard .box-title span {
+  margin-left: 10px;
+}
+
+.item-you .msg-transfer:before {
+  border-right: 5px solid #e6494e;
+}
+
+.item-you .msg-receipt:before {
+  border-right: 5px solid #4d7bfe;
+}
+
+.item-you .msg-creditReport:before {
+  /* border-right: 5px solid #fff; */
+}
+
+.item-you .msg-idcard:before {
+  /* border-right: 5px solid #fff; */
+}
+
+.item-you .msg-owe:before {
+  border-right: 5px solid #ff9808;
+}
+
+.msg-transfer{
+  background-color: #e6494e;
+}
+
+.msg-receipt{
+  background-color: #4d7bfe;
+}
+
+.msg-creditReport{
+  background-color: #fff;
+}
+
+.msg-idcard{
+  background-color: #fff;
+}
+
+.msg-owe{
+  background-color: #ff9808;
+}
+
+.msg-creditReport .box-content-inner span,
+.msg-idcard .box-content-inner span {
+  color: #333;
+}
+
+.msg-creditReport .box-content-icon i,
+.msg-idcard .box-content-icon i {
+  color: #4d7bfe;
+}
+
+.msg-creditReport .box-title,
+.msg-idcard .box-title {
+  border-top: 1px solid #ddd;
+}
+.box-wrap{
+  width: 210px;
+  display: inline-block;
+}
+
+
+.extends-information-report {
+  position: absolute;
+  line-height: 20px;
+  width: 68px;
+  height: 46px;
+  border: 1px solid #ddd;
+  right: 100px;
+  top: 17px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.extends-information-report-content {
+  position: absolute;
+  top: 0;
+  right:-360px;
+  width: 50%;
+  height: 100%;
+  /*background-color: rgba(0, 0, 0, 0.7);*/
+  /*display: -webkit-box;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  justify-content: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;*/
+  -webkit-user-select: none;
+          user-select: none;
+}
+
+.extends-information-report-content .content-wrap {
+  width: 300px;
+  height: 320px;
+  margin-left: 30px;
+}
+.extends-information-report-content .content-wrap .content-table {
+  width: 100%;
+  height: 240px;
+  background-color: #fff;
+}
+
+.extends-information-report-content .content-wrap .content-table .table-item {
+  width: 100%;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+}
+
+.extends-information-report-content .content-wrap .content-table .table-item .item-unit {
+  width: 100px;
+  height: 100%;
+  text-align: center;
+  line-height: 40px;
+  float: left;
+  box-sizing: border-box;
+  border-top: 1px solid #ddd;
+}
+
+.extends-information-report-content .content-wrap .content-table .table-item .item-unit:nth-of-type(2) {
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+}
+
+.extends-information-report-content .content-wrap .content-fail {
+  width: 100%;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  background-color: #6599ff;
+  box-sizing: border-box;
+  border-top: 1px solid #ddd;
+}
+
+.extends-information-report-content .content-wrap .content-header {
+  width: 100%;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  background-color: #6599ff;
+}
+
+.extends-information-report-content .content-close {
+  font-size: 30px;
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  color: #ffffff;
+}
+
+
+#extend-quick-message-list {
+  width: 460px;
+  background: #e5f4ff;
+  position: absolute;
+  height:120px;
+  overflow-y:auto;
+}
+
+#extend-quick-message-list  .messgeList li{
+  height: 30px;
+  line-height: 30px;
+  cursor: pointer;
+  padding-left: 8px;
+}
+
+#extend-quick-message-list   .messgeList li:hover{
+ background: #0888ff;
+}
+
+#chatBox .extends-netcall-dialog {
+  width: 480px;
+  height: 302px;
+  background: #fff;
+  position: absolute;
+  box-shadow: 0px 0px 10px #333;
+  border-radius:8px;
+  left:100px;
+  top:180px;
+  z-index: 10;
+}
+#chatBox .extends-netcall-dialog .netcall-dialog-head {
+  height: 32px;
+  border-radius: 8px 8px 0 0;
+  background: #f0f1f5;
+}
+
+#chatBox .extends-netcall-dialog .netcall-dialog-head img {
+  float: left;
+  margin: 7px 0 0 10px
+}
+
+#chatBox .extends-netcall-dialog .netcall-dialog-head p {
+  display: inline-block;
+  margin-left: 5px;
+  line-height: 30px
+}
+
+#chatBox .extends-netcall-dialog .netcall-dialog-head .xybgclose {
+  float: right;
+  margin-right: 15px;
+  font-size: 16px;
+  line-height: 30px
+}
+
+#chatBox .extends-netcall-dialog .netcall-dialog-content li {
+  padding-left: 31px;
+  line-height: 30px
+}
+
+#chatBox .extends-netcall-dialog .netcall-dialog-content li.font16 {
+  font-size: 16px
+}
+
+#chatBox .extends-netcall-dialog .netcall-dialog-content li.fontWight {
+  font-weight: 700
+}
+
+#chatBox .extends-netcall-dialog .netcall-dialog-content li:first-child {
+  margin-top: 10px
+}
+
+#chatBox .extends-netcall-dialog .netcall-dialog-content .more {
+  display: block;
+  margin: 5px auto;
+  width: 0;
+  height: 0;
+  border-top: 5px solid #333;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid transparent;
+  cursor: pointer
+}
+
+#chatBox .extends-Loandetails {
+  position: absolute;
+  top: 150px;
+  left: 100px;
+  width: 330px;
+  height: 382px;
+  border-radius: 10px 10px 10px 10px;
+  background: #fff;
+  box-shadow: 1px 1px 10px #333;
+  z-index: 10;
+}
+
+#chatBox .extends-Loandetails .LoandetailsHead {
+  height: 30px;
+  border-radius: 10px 10px 0 0;
+  background: #f0f1f5
+}
+
+#chatBox .extends-Loandetails .LoandetailsHead img {
+  float: left;
+  margin: 5px 0 0 10px
+}
+
+#chatBox .extends-Loandetails .LoandetailsHead .loan {
+  float: left;
+  margin-left: 5px;
+  line-height: 28px
+}
+
+#chatBox .extends-Loandetails .close {
+  float: right;
+  margin-right: 15px;
+  font-size: 16px;
+  line-height: 30px
+}
+
+#chatBox .extends-netcall-dialog .close {
+  float: right;
+  margin-right: 15px;
+  font-size: 16px;
+  line-height: 30px
+}
+
+#chatBox .extends-Loandetails .loandetailsContent .iconphoto {
+  margin: 20px auto;
+  width: 50px;
+  height: 50px;
+  background: url(../images/Loan1.png)
+}
+
+#chatBox .extends-Loandetails .loandetailsContent .iconText {
+  margin-top: 10px;
+  color: #111;
+  text-align: center;
+  font-size: 32px
+}
+
+#chatBox .extends-Loandetails .loandetailsContent .Loan-send {
+  text-align: center;
+  font-size: 16px
+}
+
+#chatBox .extends-Loandetails .loandetailsContent ul {
+  margin-top: 35px
+}
+
+#chatBox .extends-Loandetails .loandetailsContent ul li {
+  margin-top: 15px;
+  padding-left: 18px
+}
+
+#chatBox .extends-Loandetails .loandetailsContent ul li span {
+  font-weight: 700
+}
+
+#chatBox .extends-Loandetails .loanfoot {
+  padding-left: 150px;
+  height: 35px;
+  border-radius: 0 0 10px 10px;
+  background: #e5eff7
+}
+
+#chatBox .extends-Loandetails .loanfoot a {
+  display: inline-block;
+  margin-top: 5px;
+  margin-right: 10px;
+  width: 70px;
+  height: 25px;
+  border: 1px solid #0588fe;
+  border-radius: 3px;
+  text-align: center;
+  line-height: 25px
+}
+
+#chatBox .extends-Loandetails .loanfoot a.active {
+  background: #0588fe
+}
+
+#chatBox .extends-Loandetails2 .loandetailsContent .iconphoto {
+  margin: 20px auto;
+  width: 50px;
+  height: 50px;
+  background: url(../images/overdue.png)
+}
+
+#chatBox .transfer {
+  position: absolute;
+  left: 100px;
+  width: 330px;
+  height: 380px;
+  background: #fff
+}
+
+#chatBox .transfer .loandetailsContent {
+  margin-top: 45px
+}
+
+#chatBox .transfer .TranHead {
+  height: 32px;
+  background: #f0f1f5
+}
+
+#chatBox .transfer .loandetailsContent ul {
+  margin-top: 20px
+}
+
+#chatBox .extends-Loandetails2 ul {
+  margin: 20px auto 10px
+}
+
+#chatBox .accounts {
+  height: 302px;
+  z-index:10;
+}
+
+#chatBox .transfer .loandetailsContent .iconphoto {
+  margin: 20px auto;
+  width: 50px;
+  height: 50px;
+  background: url(../images/waitfor.png)
+}
+
+
+

@@ -1,0 +1,146 @@
+.title {
+  width: 100%;
+  height: 30px;
+}
+
+.title .title-item {
+  float: left;
+  width: 50%;
+  height: 100%;
+  font-size: 18px;
+  text-align: center;
+  line-height: 30px;
+  color: #fff;
+}
+
+.customer-list-wrap {
+  width: 40%;
+  height: 650px;
+  position: absolute;
+  left: 5%;
+  top: 60px;
+  z-index: 33;
+  background: #fff;
+}
+.customer-list-wrap .customer-list {
+  width: 100%;
+  height: 610px;
+}
+
+.waiter-list-wrap {
+  width: 40%;
+  height: 650px;
+  position: absolute;
+  right: 5%;
+  top: 60px;
+  z-index: 33;
+  background: #fff;
+}
+
+.waiter-list-wrap .waiter-list {
+  width: 100%;
+  height: 610px;
+}
+
+body{
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.text-right{
+  float: right;
+}
+
+.active {
+  background: #07c677 !important;
+}
+
+.circular {
+  width: 20px;
+  height: 20px;
+  float: right;
+  background: #dddddd;
+  border-radius: 50%;
+  margin-top: 10px;
+}
+
+.btn-group {
+  width: 300px;
+  height: 50px;
+  position: absolute;
+  right: 30px;
+  bottom: 10px;
+}
+
+.btn-group .btn-item {
+  float: left;
+  width: 120px;
+  height: 45px;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 45px;
+}
+
+.btn-group .btn-confirm {
+  background: #07c677;
+  color: #fff;
+  margin-right: 40px;
+}
+
+.btn-group .btn-cancel {
+  background: #bd404a;
+  color: #fff;
+}
+
+.list-search {
+  width: 100%;
+  height: 40px;
+  box-sizing: border-box;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  background-color: #E5F3FF;
+}
+
+.list-search .search-group {
+  border: 1px solid #1bb8f9;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  justify-content: space-between;
+  -webkit-box-pack: space-between;
+  -webkit-justify-content: space-between;
+}
+
+.list-search .search-group .group-sign {
+  width: 60px;
+  height: 30px;
+  display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  justify-content: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+}
+
+.list-search .search-group .input-control {
+  width: 100%;
+  outline: none;
+  border: none;
+  height: 30px;
+  text-indent: 1em;
+  line-height: 30px;
+}
+
+.hide {
+  display: none !important;
+}
