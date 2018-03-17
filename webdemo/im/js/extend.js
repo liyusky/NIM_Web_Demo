@@ -1,188 +1,162 @@
 var ExtendsFn = {
-  Transfer: null,
-  creditUrl: null,
-  released: null,
-  IOU: null,
-  details: null,
   urldata: {
-    Transfer: "webnim/zhuanzhang.json",
-    creditUrl: "webnim/xiyongbaogao.json",
-    released: "webnim/jiekuanxiangqingyifangkuan.json",
-    IOU: "webnim/qiantiao.json",
-    details: "webnim/jiekuanxiangqingyiyuqi.json"
-  },
-  creatMark: function () {
-    $(document.body).append('<div class="mark"></div>'); // 遮罩层
-  }, // 获取请求文件类型
-  dataTypes: function (url) {
-    var arr = url.split("."),type = arr[1];
-    return type;
+    transfer: 'webnim/zhuanzhang.json',
+    creditUrl: 'webnim/xiyongbaogao.json',
+    released: 'webnim/jiekuanxiangqingyifangkuan.json',
+    ioudata: 'webnim/qiantiao.json',
+    details: 'webnim/jiekuanxiangqingyiyuqi.json'
   },
   showZZ: function (phone, ev) { //展示转账记录
-    this.creatMark();
-    this.prevent(this.urldata.Transfer, this.dataTypes(this.urldata.Transfer));
+    this.getData(this.urldata.transfer);
   },
   showXYBG: function (phone) { //展示信用报告
-    this.creatMark();
-    this.prevent(this.urldata.creditUrl, this.dataTypes(this.urldata.creditUrl));
+    this.getData(this.urldata.creditUrl);
   },
   hideXYBG: function (event) { // 隐藏信用报告
-    $(".mark").remove();
-    $("#" + event).remove(); // 因为后面是ajax动态加载的所以每次关闭的时候要直接remove掉元素
+    $('.mark').remove();
+    $('#' + event).remove();
   },
   showJT: function (id) { //展示借条
-    this.creatMark(); // 创建遮罩层
-    this.prevent(this.urldata.released, this.dataTypes(this.urldata.released));
+    this.getData(this.urldata.released);
   },
   showQT: function (id) { //展示欠条
-    this.creatMark();
-    this.prevent(this.urldata.IOU, this.dataTypes(this.urldata.IOU));
+    this.getData(this.urldata.ioudata);
   },
-  prevent: function (url, type) {
-    this.getData(url, type); // ajax获取
-  },
-  appends: function (str) {
-    $("#chatBox").append(str);
-  },
-  render: function (url, data, type) {
+  render: function (url, data) {
     var html = "";
     switch (url) { // 借款详情已放款
-      case "webnim/jiekuanxiangqingyifangkuan" + "." + type:
-        html = '<div class="extends-Loandetails" id="extends-released">' +
-          '       <div class="LoandetailsHead">' +
-          '          <img src="./images/Loan.png" alt="Alternate Text">' +
-          '          <p class="loan">借款详情</p>' +
-          '         <a onclick="javascript:ExtendsFn.hideXYBG(\'extends-released\');" class="close">X</a>' +
-          '      </div>' +
-          '      <div class="loandetailsContent">' +
-          '          <div class="iconphoto"></div>' +
-          '          <p class="Loan-send">' + data.state + '</p>' +
-          '          <p class="iconText">￥' + data.capital + '.00</p>' +
-          '          <ul>' +
-          '             <li>本金: <span>' + data.capital + '.00</span></li>' +
-          '              <li>年利率: <span>' + data.rate + '%</span></li>' +
-          '              <li>其他费用: <span>' + data.otherMoney + '.00</span></li>' +
-          '              <li>借款时间: <span>20' + data.startDate + ' 09:35:12</span></li>' +
-          '              <li>到期时间: <span>20' + data.endDate + ' 09:35:12</span></li>' +
-          '          </ul>' +
-          '      </div>' +
-          '  </div>';
-        this.appends(html);
-        break;
-      case "webnim/qiantiao" + "." + type: // 欠条
-        html = '<div class="extends-Loandetails transfer" id="extends-Transfer">' +
-          '         <div class="LoandetailsHead">' +
-          '        <img src="./images/Loan.png" alt="转账详情" />' +
-          '      <p class="loan">欠条详情</p>' +
-          '      <a onclick="javascript:ExtendsFn.hideXYBG(\'extends-Transfer\');" class="close">X</a>' +
-          '  </div>' +
-          '  <div class="loandetailsContent">' +
-          '      <div class="iconphoto"></div>' +
-          '      <p class="Loan-send">已放款</p>' +
-          '      <p class="iconText">￥' + data.capital + '.00</p>' +
-          '      <ul>' +
-          '          <li>本金: <span>' + data.capital + '.00</span></li>' +
-          '          <li>年利率: <span>' + data.capital + '%</span></li>' +
-          '          <li>其他费用:<span>' + data.otherMoney + '.00</span></li>' +
-          '          <li>借款时间: <span>20' + data.startDate + ' 09:35:12</span></li>' +
-          '          <li>到期日期: <span>20' + data.endDate + '  09:35:12</span></li>' +
-          '      </ul>' +
-          '  </div>' +
-          '</div>';
-        this.appends(html);
-        break;
-      case "webnim/xiyongbaogao" + "." + type: // 信用报告
-        html = '<div class="extends-netcall-dialog" id="extend-dialog-netcall">' +
-          '<div class="netcall-dialog-head">' +
-          '     <img src="./images/details.jpg" alt="Alternate Text">' +
-          '     <p class="details">信用报告</p>' +
-          '           <a onclick="javascript:ExtendsFn.hideXYBG(\'extend-dialog-netcall\');" class="close">X</a>' +
-          '       </div>' +
-          '       <div class="netcall-dialog-content">' +
-          '           <ul>' +
-          '               <li class="font16 fontWight">个人基本信息</li>' +
-          '               <li>姓名: ' + data.name + '</li>' +
-          '               <li>身份证号: ' + data.ID + '</li>' +
-          '               <li>申请编号: ' + data.applyNum + '</li>' +
-          '               <li>报告时间: ' + data.date + ' 10:44:55</li>' +
-          '               <li class="font16 fontWight">风险排查</li>' +
-          '               <li>[' + data.fenxianOne + ']</li>' +
-          '              <li>[' + data.fenxianTwo + ']</li>' +
-          '           </ul>' +
-          '           <span class="more"></span>' +
-          '       </div>' +
-          '   </div>';
-        this.appends(html);
-        break;
-      case "webnim/jiekuanxiangqingyiyuqi" + "." + type: // 借款详情已逾期
-        html = '<div class="extends-Loandetails2 extends-Loandetails" id="extends-Loandetails2">' +
-          ' <div class="LoandetailsHead">' +
-          '           <img src="./images/Loan.png" alt="Alternate Text" />' +
-          '           <p class="loan">借款详情</p>' +
-          '           <a onclick="javascript:ExtendsFn.hideXYBG(\'extends-Loandetails2\');" class="close">X</a>' +
-          '       </div>' +
-          '       <div class="loandetailsContent">' +
-          '           <div class="iconphoto"></div>' +
-          '           <p class="Loan-send">' + data.state + '7天</p>' +
-          '           <p class="iconText">￥' + data.capital + '.00</p>' +
-          '           <ul>' +
-          '               <li>本金: <span>' + data.capital + '.00</span></li>' +
-          '               <li>年利率: <span>' + data.rate + '%</span></li>' +
-          '               <li>其他费用: <span>' + data.otherMoney + '.00</span></li>' +
-          '               <li>借款时间: <span>' + data.startDate + ' 09:35:12</span></li>' +
-          '               <li>到期时间: <span>' + data.endDate + ' 09:35:12</span></li>' +
-          '           </ul>' +
-          '       </div>' +
-          '       <div class="loanfoot">' +
-          '           <a href="javascript:;">销账</a>' +
-          '           <a href="javascript:;" class="active">展期</a>' +
-          '       </div>' +
-          '    </div>';
-        this.appends(html)
-        break;
-      case "webnim/zhuanzhang" + "." + type: // 展示转账记录
-        html = '<div class="extends-Loandetails accounts" id="extends-Loandetails">' +
+      case 'webnim/jiekuanxiangqingyifangkuan.json':
+        html = '<div class="mark"><div class="extends-Loandetails" id="extends-released">' +
           '<div class="LoandetailsHead">' +
-          '          <img src="./images/Loan.png" alt="转账详情" />' +
-          '          <p class="loan">欠条详情</p>' +
-          '          <a onclick="javascript:ExtendsFn.hideXYBG(\'extends-Loandetails\');" class="close">X</a>' +
-          '      </div>' +
-          '      <div class="loandetailsContent">' +
-          '         <div class="iconphoto"></div>' +
-          '          <p class="Loan-send">已收款</p>' +
-          '          <p class="iconText">￥500.00</p>' +
-          '          <ul>' +
-          '              <li>转给: <span>' + data.name + '</span></li>' +
-          '              <li>备注: <span>' + data.note + '</span></li>' +
-          '              <li>时间:<span>20' + data.date + ' 09:35:12</span></li>' +
-          '          </ul>' +
-          '      </div>' +
-          '  </div>';
-        this.appends(html);
+          '<img src="./images/Loan.png" alt="Alternate Text">' +
+          '<p class="loan">借款详情</p>' +
+          '<a onclick="javascript:ExtendsFn.hideXYBG(\'extends-released\');" class="close">X</a>' +
+          '</div>' +
+          '<div class="loandetailsContent">' +
+          '<div class="iconphoto"></div>' +
+          '<p class="Loan-send">' + data.state + '</p>' +
+          '<p class="iconText">￥' + data.capital + '.00</p>' +
+          '<ul>' +
+          '<li>本金: <span>' + data.capital + '.00</span></li>' +
+          '<li>年利率: <span>' + data.rate + '%</span></li>' +
+          '<li>其他费用: <span>' + data.otherMoney + '.00</span></li>' +
+          '<li>借款时间: <span>20' + data.startDate + ' 09:35:12</span></li>' +
+          '<li>到期时间: <span>20' + data.endDate + ' 09:35:12</span></li>' +
+          '</ul>' +
+          '</div>' +
+          '</div>' +
+          '</div>';
+        break;
+      case 'webnim/qiantiao.json': // 欠条
+        html = '<div class="mark"><div class="extends-Loandetails transfer" id="extends-Transfer">' +
+          '<div class="LoandetailsHead">' +
+          '<img src="./images/Loan.png" alt="转账详情" />' +
+          '<p class="loan">欠条详情</p>' +
+          '<a onclick="javascript:ExtendsFn.hideXYBG(\'extends-Transfer\');" class="close">X</a>' +
+          '</div>' +
+          '<div class="loandetailsContent">' +
+          '<div class="iconphoto"></div>' +
+          '<p class="Loan-send">已放款</p>' +
+          '<p class="iconText">￥' + data.capital + '.00</p>' +
+          '<ul>' +
+          '<li>本金: <span>' + data.capital + '.00</span></li>' +
+          '<li>年利率: <span>' + data.capital + '%</span></li>' +
+          '<li>其他费用:<span>' + data.otherMoney + '.00</span></li>' +
+          '<li>借款时间: <span>20' + data.startDate + ' 09:35:12</span></li>' +
+          '<li>到期日期: <span>20' + data.endDate + '  09:35:12</span></li>' +
+          '</ul>' +
+          '</div>' +
+          '</div>' +
+          '</div>';
+        break;
+      case 'webnim/xiyongbaogao.json': // 信用报告
+        html = '<div class="mark"><div class="extends-netcall-dialog" id="extend-dialog-netcall">' +
+          '<div class="netcall-dialog-head">' +
+          '<img src="./images/details.jpg" alt="Alternate Text">' +
+          '<p class="details">信用报告</p>' +
+          '<a onclick="javascript:ExtendsFn.hideXYBG(\'extend-dialog-netcall\');" class="close">X</a>' +
+          '</div>' +
+          '<div class="netcall-dialog-content">' +
+          '<ul>' +
+          '<li class="font16 fontWight">个人基本信息</li>' +
+          '<li>姓名: ' + data.name + '</li>' +
+          '<li>身份证号: ' + data.ID + '</li>' +
+          '<li>申请编号: ' + data.applyNum + '</li>' +
+          '<li>报告时间: ' + data.date + ' 10:44:55</li>' +
+          '<li class="font16 fontWight">风险排查</li>' +
+          '<li>[' + data.fenxianOne + ']</li>' +
+          '<li>[' + data.fenxianTwo + ']</li>' +
+          '</ul>' +
+          '<span class="more"></span>' +
+          '</div>' +
+          '</div>' +
+          '</div>';
+        break;
+      case 'webnim/jiekuanxiangqingyiyuqi.json': // 借款详情已逾期
+        html = '<div class="mark"><div class="extends-Loandetails2 extends-Loandetails" id="extends-Loandetails2">' +
+          '<div class="LoandetailsHead">' +
+          '<img src="./images/Loan.png" alt="Alternate Text" />' +
+          '<p class="loan">借款详情</p>' +
+          '<a onclick="javascript:ExtendsFn.hideXYBG(\'extends-Loandetails2\');" class="close">X</a>' +
+          '</div>' +
+          '<div class="loandetailsContent">' +
+          '<div class="iconphoto"></div>' +
+          '<p class="Loan-send">' + data.state + '7天</p>' +
+          '<p class="iconText">￥' + data.capital + '.00</p>' +
+          '<ul>' +
+          '<li>本金: <span>' + data.capital + '.00</span></li>' +
+          '<li>年利率: <span>' + data.rate + '%</span></li>' +
+          '<li>其他费用: <span>' + data.otherMoney + '.00</span></li>' +
+          '<li>借款时间: <span>' + data.startDate + ' 09:35:12</span></li>' +
+          '<li>到期时间: <span>' + data.endDate + ' 09:35:12</span></li>' +
+          '</ul>' +
+          '</div>' +
+          '<div class="loanfoot">' +
+          '<a href="javascript:;">销账</a>' +
+          '<a href="javascript:;" class="active">展期</a>' +
+          '</div>' +
+          '</div>' +
+          '</div>';
+        break;
+      case 'webnim/zhuanzhang.json': // 展示转账记录
+        html = '<div class="mark"><div class="extends-Loandetails accounts" id="extends-Loandetails">' +
+          '<div class="LoandetailsHead">' +
+          '<img src="./images/Loan.png" alt="转账详情" />' +
+          '<p class="loan">欠条详情</p>' +
+          '<a onclick="javascript:ExtendsFn.hideXYBG(\'extends-Loandetails\');" class="close">X</a>' +
+          '</div>' +
+          '<div class="loandetailsContent">' +
+          '<div class="iconphoto"></div>' +
+          '<p class="Loan-send">已收款</p>' +
+          '<p class="iconText">￥500.00</p>' +
+          '<ul>' +
+          '<li>转给: <span>' + data.name + '</span></li>' +
+          '<li>备注: <span>' + data.note + '</span></li>' +
+          '<li>时间:<span>20' + data.date + ' 09:35:12</span></li>' +
+          '</ul>' +
+          '</div>' +
+          '</div>' +
+          '</div>';
         break;
     }
+    $('#chatBox').append(html);
   },
-  getData: function (urls, type) {
+  getData: function (urls) {
     var $this = this;
-    if (!type) {
-      alert("请求文件类型有误");
-      $(".mark").remove();
-      return false;
-    } else {
-      $.ajax({
-        url: "/" + urls,
-        Type: type,
-        success: function (data) {
-          $this.render(urls, data, type);
-        },
-        error: function () {
-          alert("数据请求失败r...");
-          $(".mark").remove();
-        }
-      });
-    }
+    $.ajax({
+      url: '/' + urls,
+      success: function (data) {
+        $this.render(urls, data);
+      },
+      error: function () {
+        alert('数据请求失败...');
+        $('.mark').remove();
+      }
+    });
   }
-}
+};
+
+
 var ExtendTransference = {
   showTransference: function () {
     $("#extend-transference-iframe")
