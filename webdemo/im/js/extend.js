@@ -53,17 +53,14 @@ var ExtendsFn = {
         dialogHtml+= this.commotdata(data,'xxxxxx').data(弹出层中间图标与状态)
         */
     };
-
     return { // commotdata(第一个参数为ajaxdata,第二个参数为当前状态更改图片)
       newHtml: dialogHtml + this.commotdata(data).personlist(data, 'message', loadfootHtml), // 借条和欠条
       accountsdialog: dialogHtml + this.commotdata(data).personlist(data, 'account') // 转账弹出层
     };
   },
   commotdata: function (data, className) {
-
     // 弹出层中间图标与状态通用数据 overdue为逾期 waitfor为待XXX 默认为已收款
     var data1 = '<div class="success ' + (className ? className : '') + '"></div>' + '<p class="Loan-send">' + data.state + '</p>';
-
     function personMessageStr(data, Name, loadfootHtml) {
       var str = '';
       if (Name == 'message') { // 欠条和借条用户信息
@@ -419,6 +416,7 @@ var ExtendInformationReport = {
       '</li>';
   }
 }
-
+window.onload = function(){
 ExtendInformationReport.init();
 ExtendQuickSend.init();
+};
