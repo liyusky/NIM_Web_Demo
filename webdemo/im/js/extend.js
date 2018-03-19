@@ -336,7 +336,6 @@ var ExtendInfomessages = {
         _self.initMessageList(data.list);
       }
     })
-
   },
   initMessageList: function (data) {
     var newarr = data.split('['),
