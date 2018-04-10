@@ -8,6 +8,7 @@ YX.fn.friend = function () {
      //添加好友
     this.$addFriend = $('#addFriend')
     this.$addFriendBox = $('#addFriendBox')
+    this.$temporary = $('.temporary')
     this.$addFriend.on('click',this.showAddFriend.bind(this))
     this.$addFriendBox.delegate('.j-close', 'click', this.hideAddFriend.bind(this))
     this.$addFriendBox.delegate('.j-search','click',this.searchFriend.bind(this))
@@ -16,6 +17,7 @@ YX.fn.friend = function () {
     this.$addFriendBox.delegate('.j-blacklist','click',this.rmBlacklist.bind(this))
     this.$addFriendBox.delegate('.j-chat','click',this.beginChat.bind(this)) 
     this.$addFriendBox.delegate('.j-account','keydown',this.inputAddFriend.bind(this))
+    this.$arrlist = [];
     //黑名单
     this.$blacklist = $('#blacklist')  
     $("#showBlacklist").on('click',this.showBlacklist.bind(this))
@@ -42,7 +44,7 @@ YX.fn.buildFriends = function () {
             onclickitem:this.openChatBox.bind(this),
             infoprovider:this.infoProvider.bind(this)
 
-        } 
+        }
         this.friends = new NIMUIKit.FriendList(options)
         this.friends.inject($('#friends').get(0))
     }else{
@@ -59,6 +61,7 @@ YX.fn.showAddFriend = function(){
     this.$addFriendBox.removeClass("hide")
     this.$mask.removeClass('hide')
     this.$addFriendBox.find(".j-account").focus()
+    this.$addFriendBox.find(".temporary ").addClass('hide');
 }
 YX.fn.hideAddFriend = function(){
     this.resetSearchFriend()
@@ -75,6 +78,16 @@ YX.fn.beginChat = function(){
     var account = $.trim(this.$addFriendBox.find(".j-account").val().toLowerCase())
     this.hideAddFriend()
     this.openChatBox(account,"p2p")
+    // 如果不是好友点击临时会话添加好友列表(不加好友)
+    var data = {
+        friends:this.cache.getFriendslistOnShow(),
+        personSubscribes: this.cache.getPersonSubscribes(),
+        account:userUID
+    }
+    this.$arrlist.push(this.friendData)
+    data.friends[data.friends.length] = this.$arrlist[0];
+    this.cache.updatePersonlist(data.friends) 
+    this.$arrlist=[];
 }
 YX.fn.resetSearchFriend = function(){
     this.$addFriendBox.attr('class',"m-dialog")
@@ -98,7 +111,7 @@ YX.fn.cbRmBlacklist = function(err,data){
             this.friendData = data
         }
         this.$addFriendBox.removeClass('blacklist')
-        this.$addFriendBox.addClass(isFriend ? "friend" : "noFriend")    
+        this.$addFriendBox.addClass(isFriend ? "friend" : "noFriend")
     }
 }
 YX.fn.inputAddFriend = function(evt){
@@ -111,6 +124,7 @@ YX.fn.cbAddFriend = function(error, params) {
     if(!error){
         this.$addFriendBox.find(".tip").html("添加好友成功！")
         this.$addFriendBox.attr('class',"m-dialog done")
+        this.$temporary.attr('class','btn btn-ok temporary j-chat radius4px hide')
         this.cache.addFriend(params.friend)
         this.cache.updatePersonlist(this.friendData)
         this.buildFriends()
@@ -119,6 +133,8 @@ YX.fn.cbAddFriend = function(error, params) {
     }else{
         this.$addFriendBox.find(".tip").html("该帐号不存在，请检查你输入的帐号是否正确")
         this.$addFriendBox.attr('class',"m-dialog done")          
+        this.$addFriendBox.attr('class',"m-dialog done")
+        this.$temporary.attr('class','btn btn-ok temporary j-chat radius4px hide')        
     }
     
 }
@@ -145,13 +161,18 @@ YX.fn.cbGetUserInfo = function(err,data){
             if(inBlacklist){
                  this.$addFriendBox.addClass("blacklist")    
             }else{
-                this.$addFriendBox.addClass(isFriend?"friend":"noFriend")    
+                this.$addFriendBox.addClass(isFriend?"friend":"noFriend")   
+                if(isFriend){ // 是好友
+                    this.$temporary.attr('class','btn btn-ok temporary j-chat radius4px hide')  
+                }else{ // 不是好友
+                    this.$temporary.removeClass('hide')
+                }
             }
         }
-        
     }else{
         this.$addFriendBox.find(".tip").html("该帐号不存在，请检查你输入的帐号是否正确")
         this.$addFriendBox.attr('class',"m-dialog done")      
+        this.$temporary.attr('class','btn btn-ok temporary j-chat radius4px hide')        
     }
 }
 /************************

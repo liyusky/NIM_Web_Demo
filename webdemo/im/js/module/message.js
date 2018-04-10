@@ -78,7 +78,6 @@ YX.fn.doMsg = function (msg) {
                 var msgHtml = appUI.updateChatContentUI(msg, that.cache)
                 that.$chatContent.find('.no-msg').remove()
                 that.$chatContent.append(msgHtml).scrollTop(99999)
-
             }
         }
     //非群通知消息处理

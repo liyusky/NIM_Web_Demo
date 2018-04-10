@@ -116,7 +116,6 @@
 							account,
 							scene,
 							target = evt.srcElement || evt.target;
-
 						while (self !== target) {
 							if (target.tagName.toLowerCase() === "img") {
 								var item = target.parentNode.parentNode;
@@ -415,7 +414,6 @@
 									multiPortStatus = '[' + multiPortStatus + ']'
 								}
 							}
-
 							html += ['<li class="panel_item ' + (info.crtSession === info.target ? 'active' : '') + '" data-scene="p2p" data-account="' + info.account + '">',
 							'<div class="panel_avatar"><img class="panel_image" src="' + info.avatar + '"/></div>',
 								'<div class="panel_text">',

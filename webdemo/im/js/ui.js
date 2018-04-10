@@ -55,8 +55,8 @@ var appUI = {
      * 通用消息内容UI
      */
     makeChatContent: function (message, user) {
-        var msgHtml;
-        //通知类消息
+        var msgHtml,content
+        //通知类消息]
         if (message.attach && message.attach.type && (message.attach.netcallType === undefined || (message.attach.type !== "netcallBill" && message.attach.type !== "netcallMiss"))) {
             if (message.attach.netcallType !== undefined) return ''; // 隐藏掉netcall相关的系统通知消息
             // 白板互动结束后会收到的互动时长通知，会触发聊天框的新增，屏蔽
@@ -70,11 +70,16 @@ var appUI = {
                 avatar = user.avatar,
                 showNick = message.scene === 'team' && from !== userUID,
                 msgHtml;
+            if(message.content){
+                var messages = JSON.parse(message.content);
+                messages.data['id'] && ExtendsFn.init(messages.data['id'], message.from);
+            }
             if (type === "tip") {
                 msgHtml = ['<div data-time="' + message.time + '" data-id="' + message.idClient + '" id="' + message.idClient + '" data-idServer="' + message.idServer + '">',
                 '<p class="u-notice tc item ' + (from == userUID && message.idServer ? "j-msgTip" : "") + '" data-time="' + message.time + '" data-id="' + message.idClient + '" data-idServer="' + message.idServer + '"><span class="radius5px">' + getMessage(message) + '</span></p>',
                     '</div>'].join('');
             } else {
+                from !== userUID
                 msgHtml = [
                     '<div data-time="' + message.time + '" data-id="' + message.idClient + '" id="' + message.idClient + '" data-idServer="' + message.idServer + '" class="item item-' + buildSender(message) + '">',
                         '<img class="img j-img" src="' + getAvatar(avatar) + '" data-account="' + from + '"/>',
@@ -102,7 +107,6 @@ var appUI = {
             }
         }
         return msgHtml;
-
     },
 
     /**

@@ -189,8 +189,7 @@ YX.fn.removeFriend = function(){
     if(window.confirm("确定要删除")){
         var account = this.$personCard.data("account")
         this.mysdk.deleteFriend(account,this.cbRemoveFriend.bind(this))
-    }
-    
+    }   
 }
 
 YX.fn.cbRemoveFriend = function(error, params){
@@ -439,7 +438,15 @@ YX.fn.showInfo2 = function(){
     if(this.crtSessionType==="p2p"){
         var account = this.crtSessionAccount
         var user = this.cache.getUserById(account)
-        this.showInfoBox(user) 
+            if(!user){ // 如果不是好友查看资料
+                var nick = $('#nickName').text().split('[')[0].trim(),
+                gender = 'unknown',custom='{"type":1,"sort":"#","userid":'+account+'}',
+                createTime=new Date().getTime();
+                var account = {'account':account,'nick':nick,'gender':gender,'custom':custom,'createTime':createTime};
+                this.showInfoBox(account)
+            }else{
+                this.showInfoBox(user) 
+            }
     }
 }
 // 从聊天面板头像点进去
@@ -488,6 +495,7 @@ YX.fn.showInfoBox = function(user,type){
     }else{
         $node.find(".j-gender").addClass("hide")
     }
+    
     $node.find(".j-gender").attr('src',avatarSrc)
     $node.find(".j-username").text("帐号："+user.account)
     $node.find(".j-birth").text(user.birth ===undefined?"--":user.birth)

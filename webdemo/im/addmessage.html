@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    *{margin: 0;padding: 0}
+    ul,li{
+        list-style: none;
+    }
+    input{
+        outline: none;
+        border:none;
+    }
+    #mark{
+        width: 100%;
+        height: 100%;
+        background: rgba(100, 98, 95, 0.3);
+        position: absolute;
+    }
+    #mark .box{
+        width: 300px;
+        height: 300px;
+        background: red;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -150px;
+        margin-top: -150px;
+    }
+    #mark .box .message{
+        position: absolute;
+        bottom: -31px;
+        height: 30px;
+    }
+    #mark .box .message  .text{
+        height: 20px;
+        padding: 5px;
+        width: 230px;
+        float:left;
+    }
+    #mark .box .message .btn{
+        width: 60px;
+        height: 30px;
+        float: left;
+    } 
+    #mark .box #list{
+        overflow-y: auto;
+    }
+    #mark .box #list li{
+        height: 20px;
+        color:#fff;
+        line-height: 20px;
+        padding-left: 10px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+    #mark .box #list li:hover{
+        background: green;
+    }  
+
+</style>
+<body>
+    
+
+            <div id="mark">
+                    <div class="box">
+                            <ul id="list"></ul>
+                            <div class="message">
+                        <input type="text" placeholder="请输入快捷回复短语.." class="text" id="message">
+                        <input class="btn" type='submit' value="添加" id="add"/>
+                        </div>
+                    </div>
+            </div>
+
+            <script>
+            
+                var message = document.getElementById('message');
+                var oBtn = document.getElementById('add');
+                var list = document.getElementById('list');
+                
+                
+                oBtn.onclick = function(){
+
+                    if(message.value == ''){
+
+                        alert('请输入内容')
+
+                    }else{
+
+                        list.innerHTML += '<li>'+message.value+'</li>';
+                        message.value = '';
+                    }
+
+                }
+            
+            
+            
+            
+            
+            
+            
+            
+            </script>
+
+</body>
+</html>
