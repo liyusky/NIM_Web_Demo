@@ -421,6 +421,7 @@ var ExtendInfomessages = {
   messageDom: null,
   url: '/webnim/reply.json',
   init: function (event) {
+    this.user = readCookie('uid');
     // 阻止冒泡防止点击的时候会把事件传向父级元素
     event.stopPropagation();
     // 获取快捷回复元素
@@ -441,15 +442,24 @@ var ExtendInfomessages = {
     var _self = this;
     $.ajax({
       url: url,
+      type:'POST',
+      data:{
+        'uid':_self.user,
+        'appkey':window.CONFIG
+      },
       success: function (data) {
-        _self.initMessageList(data.list);
+        if(data.code == -1){
+          alert(data.message)
+        }else{
+          _self.initMessageList(data.data);
+        }
       }
     })
   }, // 加载到的数据添加到页面
   initMessageList: function (data) {
     var arrleft = data.split('['),
       arrright = arrleft[1].split(']'),
-      html = '', newarr = arrright[0].split(','),htmladd='';
+      html = '', newarr = arrright[0].split(',');
     for (var i = 0; i < newarr.length; i++) {
          if(i===newarr.length-1){
            html += '<li onclick="javascript:ExtendInfomessages.add();">'+newarr[i]+'</li>';

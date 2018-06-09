@@ -258,8 +258,24 @@ function getMessage(msg) {
                 var catalog = _$escape(content.data.catalog),
                     chartvar = _$escape(content.data.chartlet);
                 str = '<img class="chartlet" onload="loadImg()" src="./images/' + catalog + '/' + chartvar + '.png">';
-            }
+            };
             content = content.data;
+            if(content.title == '向你转账'){
+                str = '<div class="box-wrap msg-transfer" data-time='+msg.time+' onclick="javascript: ExtendsFn.showZZ(\'' + content.id + '\');">' +
+                '<div class="box-content">' +
+                '<div class="box-content-icon">' +
+                '<i class="icon iconfont icon-transfer"></i>' +
+                '</div>' +
+                '<div class="box-content-inner">' +
+                '<span>' + content.money + '元</span>' +
+                '<span>转账</span>' +
+                '</div>' +
+                '</div>' +
+                '<div class="box-title">' +
+                '<span>借条大师</span>' +
+                '</div>' +
+                '</div>';
+            }
             switch (content.type) {
                 case 'xybg':
                     str = '<div class="box-wrap msg-creditReport"  onclick="javascript: ExtendsFn.showXYBG(\'' + msg.target + '\');">' +
@@ -309,24 +325,24 @@ function getMessage(msg) {
                         '</div>' +
                         '</div>';
                     break;
-                case 'zz':
+                case 'zz':          
                     str = '<div class="box-wrap msg-transfer" data-time='+msg.time+' onclick="javascript: ExtendsFn.showZZ(\'' + content.id + '\');">' +
-                        '<div class="box-content">' +
-                        '<div class="box-content-icon">' +
-                        '<i class="icon iconfont icon-transfer"></i>' +
-                        '</div>' +
-                        '<div class="box-content-inner">' +
-                        '<span>' + content.money + '元</span>' +
-                        '<span>转账</span>' +
-                        '</div>' +
-                        '</div>' +
-                        '<div class="box-title">' +
-                        '<span>借条大师</span>' +
-                        '</div>' +
-                        '</div>';
-                    break;
+                   '<div class="box-content">' +
+                   '<div class="box-content-icon">' +
+                   '<i class="icon iconfont icon-transfer"></i>' +
+                   '</div>' +
+                   '<div class="box-content-inner">' +
+                   '<span>' + content.money + '元</span>' +
+                   '<span>转账</span>' +
+                   '</div>' +
+                   '</div>' +
+                   '<div class="box-title">' +
+                   '<span>借条大师</span>' +
+                   '</div>' +
+                   '</div>';
+                   break;
             }
-            break;
+        break;
         case 'robot':
             str = sentStr + '一条[机器人]消息,请到手机或电脑客户端查看';
             break;
@@ -344,6 +360,7 @@ function getMessage(msg) {
             }
             break;
     }
+
     return str;
 }
 /**
