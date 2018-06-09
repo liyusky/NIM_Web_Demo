@@ -1,3 +1,5 @@
+
+
 if (!Function.prototype.bind) {
     Function.prototype.bind = function () {
         var fn = this, args = Array.prototype.slice.call(arguments), object = args.shift();
@@ -113,7 +115,9 @@ Array.intersect = function (a, b) {
 };
 //两个数组的差集
 Array.minus = function (a, b) {
-    return a.uniquelize().each(function (o) { return b.contains(o) ? null : o });
+    return a.uniquelize().each(function (o) {
+        return b.contains(o) ? null : o
+    });
 };
 //两个数组并集
 Array.union = function (a, b) {
@@ -125,7 +129,8 @@ Array.union = function (a, b) {
 * @param msg：消息对象
 */
 function buildSessionMsg(msg) {
-    var text = (msg.scene != 'p2p' ? ((msg.from === userUID) ? "你" : getNick(msg.from)) + ":" : ""), type = msg.type;
+    var text = (msg.scene != 'p2p' ? ((msg.from === userUID) ? "你" : getNick(msg.from)) + ":" : ""),
+        type = msg.type;
     if (!/text|image|file|audio|video|geo|custom|tip|notification/i.test(type)) return '';
     switch (type) {
         case 'text':
@@ -249,17 +254,31 @@ function getMessage(msg) {
             break;
         case 'custom':
             var content = JSON.parse(msg.content);
-
             if (content.type === 3) {
                 var catalog = _$escape(content.data.catalog),
                     chartvar = _$escape(content.data.chartlet);
                 str = '<img class="chartlet" onload="loadImg()" src="./images/' + catalog + '/' + chartvar + '.png">';
-            }
-
+            };
             content = content.data;
+            if(content.title == '向你转账'){
+                str = '<div class="box-wrap msg-transfer" data-time='+msg.time+' onclick="javascript: ExtendsFn.showZZ(\'' + content.id + '\');">' +
+                '<div class="box-content">' +
+                '<div class="box-content-icon">' +
+                '<i class="icon iconfont icon-transfer"></i>' +
+                '</div>' +
+                '<div class="box-content-inner">' +
+                '<span>' + content.money + '元</span>' +
+                '<span>转账</span>' +
+                '</div>' +
+                '</div>' +
+                '<div class="box-title">' +
+                '<span>借条大师</span>' +
+                '</div>' +
+                '</div>';
+            }
             switch (content.type) {
                 case 'xybg':
-                    str = '<div class="box-wrap msg-creditReport"  onclick="javascript: ExtendsFn.showXYBG(\'' + msg.target +'\');">' +
+                    str = '<div class="box-wrap msg-creditReport"  onclick="javascript: ExtendsFn.showXYBG(\'' + msg.target + '\');">' +
                         '<div class="box-content">' +
                         '<div class="box-content-icon">' +
                         '<i class="icon iconfont icon-xinyongbaogaofasongtubiao"></i>' +
@@ -271,11 +290,11 @@ function getMessage(msg) {
                         '</div>' +
                         '<div class="box-title">' +
                         '<span>信用报告</span>' +
-                        '</div>'+
+                        '</div>' +
                         '</div>';
                     break;
                 case 'jt':
-                    str = '<div class="box-wrap msg-receipt" onclick="javascript: ExtendsFn.showJT(\'' + content.id +'\');">' +
+                    str = '<div class="box-wrap msg-receipt" onclick="javascript: ExtendsFn.showJT(\'' + content.id + '\');">' +
                         '<div class="box-content">' +
                         '<div class="box-content-icon">' +
                         '<i class="icon iconfont icon-jie"></i>' +
@@ -291,7 +310,7 @@ function getMessage(msg) {
                         '</div>';
                     break;
                 case 'qt':
-                    str = '<div class="box-wrap msg-owe" onclick="javascript: ExtendsFn.showQT(\'' + content.id +'\');">' + 
+                    str = '<div class="box-wrap msg-owe" onclick="javascript: ExtendsFn.showQT(\'' + content.id + '\');">' +
                         '<div class="box-content">' +
                         '<div class="box-content-icon">' +
                         '<i class="icon iconfont icon-qian"></i>' +
@@ -306,27 +325,27 @@ function getMessage(msg) {
                         '</div>' +
                         '</div>';
                     break;
-                case 'zz':
-                    str = '<div class="box-wrap msg-transfer" onclick="javascript: ExtendsFn.showZZ(\'' + content.id +'\');">' +
-                        '<div class="box-content">' +
-                        '<div class="box-content-icon">' +
-                        '<i class="icon iconfont icon-transfer"></i>' +
-                        '</div>' +
-                        '<div class="box-content-inner">' +
-                        '<span>' + content.money + '元</span>' +
-                        '<span>转账</span>' +
-                        '</div>' +
-                        '</div>' +
-                        '<div class="box-title">' +
-                        '<span>借条大师</span>' +
-                        '</div>' +
-                        '</div>';
-                    break;
+                case 'zz':          
+                    str = '<div class="box-wrap msg-transfer" data-time='+msg.time+' onclick="javascript: ExtendsFn.showZZ(\'' + content.id + '\');">' +
+                   '<div class="box-content">' +
+                   '<div class="box-content-icon">' +
+                   '<i class="icon iconfont icon-transfer"></i>' +
+                   '</div>' +
+                   '<div class="box-content-inner">' +
+                   '<span>' + content.money + '元</span>' +
+                   '<span>转账</span>' +
+                   '</div>' +
+                   '</div>' +
+                   '<div class="box-title">' +
+                   '<span>借条大师</span>' +
+                   '</div>' +
+                   '</div>';
+                   break;
             }
-            break;
+        break;
         case 'robot':
             str = sentStr + '一条[机器人]消息,请到手机或电脑客户端查看';
-            break
+            break;
         default:
             if (msg && msg.attach && msg.attach.netcallType !== undefined) {
                 var netcallType = msg.attach.netcallType;
@@ -339,9 +358,9 @@ function getMessage(msg) {
             } else {
                 str = sentStr + '一条[未知消息类型]消息';
             }
-
             break;
     }
+
     return str;
 }
 /**
@@ -431,7 +450,10 @@ function buildSender(msg) {
  * @return string
  */
 var dateFormat = (function () {
-    var _map = { i: !0, r: /\byyyy|yy|MM|cM|eM|M|dd|d|HH|H|mm|ms|ss|m|s|w|ct|et\b/g },
+    var _map = {
+            i: !0,
+            r: /\byyyy|yy|MM|cM|eM|M|dd|d|HH|H|mm|ms|ss|m|s|w|ct|et\b/g
+        },
         _12cc = ['上午', '下午'],
         _12ec = ['A.M.', 'P.M.'],
         _week = ['日', '一', '二', '三', '四', '五', '六'],
@@ -688,7 +710,8 @@ function getAvatar(url) {
 //或者备注名或者昵称
 function getNick(account, cache) {
     cache = cache || yunXin.cache;
-    var nick = cache.getFriendAlias(account), tmp = cache.getUserById(account);
+    var nick = cache.getFriendAlias(account),
+        tmp = cache.getUserById(account);
     nick = nick || (tmp && tmp.nick ? tmp.nick : account)
     return nick;
 }

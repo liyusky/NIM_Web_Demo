@@ -22,11 +22,11 @@ YX.fn.buildSessions = function(id) {
             onclickavatar:this.showInfo.bind(this),
             onclickitem:this.openChatBox.bind(this),
             infoprovider:this.infoProvider.bind(this),
-
-        } 
+        }
         this.sessions = new NIMUIKit.SessionList(options)
         this.sessions.inject($('#sessions').get(0))
-    }else{
+        // this.sessions.update(data)
+    }else{        
         this.sessions.update(data)
     }
     //导航上加未读示例  

@@ -56,6 +56,14 @@
                                     <p class="panel_single-row">消息中心</p>
                                 </div>
                                 <b class="count j-sysMsgCount hide"></b>
+							</div>
+							<div class="panel_item" id="addFriend">
+                                <div class="panel_avatar">
+                                    <img class="panel_image" src="images/addFriend.png" alt="添加好友" />
+                                </div>
+                                <div class="panel_text">
+                                    <p class="panel_single-row">添加好友</p>
+                                </div>
                             </div>
                         </div>
                         <div id="sessions">
@@ -67,14 +75,6 @@
                     <!-- 通讯录 -->
                     <div class="list">
                         <div class="m-panel">
-                            <div class="panel_item" id="addFriend">
-                                <div class="panel_avatar">
-                                    <img class="panel_image" src="images/addFriend.png" alt="添加好友" />
-                                </div>
-                                <div class="panel_text">
-                                    <p class="panel_single-row">添加好友</p>
-                                </div>
-                            </div>
                             <div class="panel_item" id="showBlacklist">
                                 <div class="panel_avatar">
                                     <img class="panel_image" src="images/black.png" alt="黑名单" />
@@ -375,7 +375,8 @@
 			<button class="btn btn-cancel radius4px cancel j-close">取消</button>
 			<button class="btn btn-ok radius4px search j-search">确定</button>
 			<button class="btn btn-cancel radius4px back j-back">继续搜索</button>
-			<button class="btn btn-ok radius4px add j-add">加为好友</button>
+			<button class="btn btn-ok temporary radius4px back j-chat">临时会话</button>
+			<button class="btn radius4px add j-add">加为好友</button>
 			<button class="btn btn-ok radius4px done j-close">完成</button>
 			<button class="btn btn-ok radius4px chat j-chat">聊天</button>
 			<button class="btn btn-del radius4px blacklist j-blacklist">移出黑名单</button>
@@ -553,6 +554,9 @@
 		<iframe src="" class="" id="extend-transference-iframe" class="extend-close"></iframe>
 	</section>
 
+
+
+
 	<script>
 			// IE 11 polify
 			if(!Object.assign) {
@@ -577,7 +581,6 @@
 	<script src="../3rd/NIM_Web_Netcall_v4.7.1.js"></script>
 	<script src="../3rd/NIM_Web_WebRTC_v4.7.1.js"></script>
 	<script src="../3rd/NIM_Web_WhiteBoard_v4.7.1.js"></script>
-
 	<script src="../3rd/jquery-1.11.3.min.js"></script>
 	<!--<script src="../3rd/zepto.min.js"></script>-->
 	<script>

@@ -25,7 +25,7 @@ var Cache = (function(){
   Cache.prototype.getUserById = function (account) {
     if(this.personlist[account]){
         return this.personlist[account];
-      }
+    }
       return false;
   };
   // 用户对象相关
