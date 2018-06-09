@@ -138,7 +138,7 @@ YX.fn.openChatBox = function (account, scene) {
     if (this.WB) this.WB.checkSession()
     // 是否是群管理员
     this.cache.isCurSessionTeamManager = false
-    
+
     //根据帐号跟消息类型获取消息数据
     if(scene=="p2p"){
         info = this.cache.getUserById(account)
@@ -176,7 +176,7 @@ YX.fn.openChatBox = function (account, scene) {
             this.$rightPanel.find(".u-chat-notice").removeClass("hide")
             this.$rightPanel.find(".chat-mask").removeClass("hide")
             this.$chatTitle.find('img').attr('src', "images/normal.png") 
-            this.$nickName.text(account) 
+            this.$nickName.text(account)
         }
         // this.getTeamMembers(account, function () {
         //     that.cache.isCurSessionTeamManager = that.cache.isTeamManager(userUID, that.crtSessionAccount)
