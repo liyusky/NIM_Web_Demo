@@ -16,6 +16,7 @@ YX.fn.friend = function () {
     this.$addFriendBox.delegate('.j-add','click',this.addFriend.bind(this))
     this.$addFriendBox.delegate('.j-blacklist','click',this.rmBlacklist.bind(this))
     this.$addFriendBox.delegate('.j-chat','click',this.openChatBox.bind(this)) 
+    this.$addFriendBox.delegate('.temporary','click',this.openChatBox.bind(this)) 
     this.$addFriendBox.delegate('.j-account','keydown',this.inputAddFriend.bind(this))
     this.$arrlist = [];
     //黑名单
@@ -25,13 +26,7 @@ YX.fn.friend = function () {
     this.$blacklist.delegate('.items .j-rm', 'click', this.removeFromBlacklist.bind(this))
     //我的手机
     $("#myPhone").on('click',this.sendToMyPhone.bind(this))
-    $('#btnseeion').on('click',this.openseeion.bind(this))
-}
-/* 点击打开聊天窗口  */ 
-YX.fn.openseeion = function(){
-
-    this.openChatBox('123456',"p2p")
-
+    // $('#btnseeion').on('click',this.openseeion.bind(this))
 }
 /**
  * 通讯录列表显示
@@ -83,7 +78,7 @@ YX.fn.searchFriend = function(){
 }
 YX.fn.beginChat = function(){
     var account = $.trim(this.$addFriendBox.find(".j-account").val().toLowerCase())
-    this.hideAddFriend()
+    this.hideAddFriend();
     this.openChatBox(account,"p2p")
     // 如果不是好友点击临时会话添加好友列表(不加好友)
     var data = {
