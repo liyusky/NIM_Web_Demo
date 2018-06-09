@@ -16,7 +16,7 @@ YX.fn.friend = function () {
     this.$addFriendBox.delegate('.j-add','click',this.addFriend.bind(this))
     this.$addFriendBox.delegate('.j-blacklist','click',this.rmBlacklist.bind(this))
     this.$addFriendBox.delegate('.j-chat','click',this.openChatBox.bind(this)) 
-    this.$addFriendBox.delegate('.temporary','click',this.openChatBox.bind(this)) 
+    this.$addFriendBox.delegate('.temporary','click',this.beginChat.bind(this)) 
     this.$addFriendBox.delegate('.j-account','keydown',this.inputAddFriend.bind(this))
     this.$arrlist = [];
     //黑名单
