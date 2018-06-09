@@ -6,4 +6,4 @@
 		setCookie('sdktoken', sdktoken);
 	},
 };
-Login.requestLogin('100390005', '731cb5db00c0612b07eda96ba9c3590c');
+Login.requestLogin('', '');
