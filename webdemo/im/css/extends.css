@@ -234,8 +234,10 @@
   line-height: 40px;
   background-color: #fff;
   box-sizing: border-box;
-  border-top: 1px solid #ddd;
-  border-radius: 0px 0px 8px 8px;
+}
+
+.extends-information-report-content .content-wrap .content-fail:last-child{
+  border-radius: 0 0 10px 10px;
 }
 
 .extends-information-report-content .content-wrap .content-header {
@@ -269,6 +271,9 @@
   line-height: 30px;
   cursor: pointer;
   padding-left: 8px;
+  width: 445px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 #extend-quick-message-list .messgeList li:hover {

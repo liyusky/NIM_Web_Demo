@@ -117,7 +117,7 @@ YX.fn.cbInitLocalTeamInfo = function (err, data) {
  *********************************/
 YX.fn.openChatBox = function (account, scene) {
     var info
-    var that = this
+    var that = this;
     this.mysdk.setCurrSession(scene,account)
     this.crtSession = scene+"-"+account
     this.crtSessionType = scene

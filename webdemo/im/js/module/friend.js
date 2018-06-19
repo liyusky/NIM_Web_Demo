@@ -15,8 +15,8 @@ YX.fn.friend = function () {
     this.$addFriendBox.delegate('.j-back','click',this.resetSearchFriend.bind(this))
     this.$addFriendBox.delegate('.j-add','click',this.addFriend.bind(this))
     this.$addFriendBox.delegate('.j-blacklist','click',this.rmBlacklist.bind(this))
-    this.$addFriendBox.delegate('.j-chat','click',this.openChatBox.bind(this)) 
-    this.$addFriendBox.delegate('.temporary','click',this.beginChat.bind(this)) 
+    this.$addFriendBox.delegate('.j-chat','click',this.beginChat.bind(this)) 
+    this.$addFriendBox.delegate('.temporary','click',this.temporary.bind(this)) 
     this.$addFriendBox.delegate('.j-account','keydown',this.inputAddFriend.bind(this))
     this.$arrlist = [];
     //黑名单
@@ -45,7 +45,6 @@ YX.fn.buildFriends = function () {
             onclickavatar:this.showInfo.bind(this),
             onclickitem:this.openChatBox.bind(this),
             infoprovider:this.infoProvider.bind(this)
-
         }
         this.friends = new NIMUIKit.FriendList(options)
         this.friends.inject($('#friends').get(0))
@@ -71,14 +70,20 @@ YX.fn.hideAddFriend = function(){
     this.$mask.addClass('hide')
 }
 YX.fn.searchFriend = function(){
-    var account =  $.trim(this.$addFriendBox.find(".j-account").val().toLowerCase())
+    var account =  $.trim(this.$addFriendBox.find(".j-account").val().toLowerCase());
+    this.account = account;
     if(account!==""){
         this.mysdk.getUser(account,this.cbGetUserInfo.bind(this))
     }  
 }
 YX.fn.beginChat = function(){
     var account = $.trim(this.$addFriendBox.find(".j-account").val().toLowerCase())
+    this.openChatBox(account,"p2p");
     this.hideAddFriend();
+}
+
+YX.fn.temporary  = function(){
+    var account = this.account;
     this.openChatBox(account,"p2p")
     // 如果不是好友点击临时会话添加好友列表(不加好友)
     var data = {
@@ -90,10 +95,12 @@ YX.fn.beginChat = function(){
     data.friends[data.friends.length] = this.$arrlist[0];
     this.cache.updatePersonlist(data.friends) 
     this.$arrlist=[];
+    this.hideAddFriend();
 }
 YX.fn.resetSearchFriend = function(){
     this.$addFriendBox.attr('class',"m-dialog")
     this.$addFriendBox.find(".j-account").val("")
+    $('.temporary').attr('class',"btn btn-ok temporary radius4px back j-chat hide")
 }
 YX.fn.addFriend = function(){
     var id  = $.trim(this.$addFriendBox.find(".j-account").val().toLowerCase())
@@ -139,7 +146,9 @@ YX.fn.cbAddFriend = function(error, params) {
         this.$temporary.attr('class','btn btn-ok temporary j-chat radius4px hide')        
     }
     
-}
+};
+
+
 YX.fn.cbGetUserInfo = function(err,data){
     if(err){
         alert(err)
