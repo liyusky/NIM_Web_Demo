@@ -235,7 +235,8 @@
                         <div class="messagebox">
                             <textarea onclick="ExtendInfomessages.init(event);" id="messageText" class="chat-btn msg-input box-sizing radius5px p2p" rows="1" autofocus="autofocus" maxlength="500"></textarea>
                             <div class="extends-quick-messageList-content hide" id="extend-quick-message-list">
-                                <ul class="messgeList"></ul>
+                                <ul class="messgeList">
+								</ul>
                             </div>
                         </div>
                         <a class="btn-send radius5px" id="sendBtn">发送</a>
@@ -250,6 +251,7 @@
                 <div class="content-header">借条大师信息报告</div>
                 <ul class="content-table" id="extends-information-report-content-table">
                 </ul>
+                <div class="content-fail">当前逾期时间为<span class="failText"></span>天</div>
                 <div class="content-fail">最长逾期时间为<span class="failText"></span>天</div>
             </div>
         </div>
@@ -629,7 +631,6 @@
 	<script src="js/module/personCard.js"></script>
 	<script src="js/module/session.js"></script>
 	<script src="js/module/friend.js"></script>
-
 	<script src="js/module/dialog_team.js"></script>
 	<script src="js/module/cloudMsg.js"></script>
 	<script src="js/module/notification.js"></script>

@@ -261,7 +261,7 @@ function getMessage(msg) {
             };
             content = content.data;
             if(content.title == '向你转账'){
-                str = '<div class="box-wrap msg-transfer" data-time='+msg.time+' onclick="javascript: ExtendsFn.showZZ(\'' + content.id + '\');">' +
+                str = '<div class="box-wrap msg-transfer" data-time='+msg.time+'>' +
                 '<div class="box-content">' +
                 '<div class="box-content-icon">' +
                 '<i class="icon iconfont icon-transfer"></i>' +

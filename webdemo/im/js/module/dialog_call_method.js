@@ -45,7 +45,6 @@ NetcallBridge.fn.dialog_call = {
         $dialog.on('click', '.j-close', function (e) {
             e.preventDefault();
             that.close();
-
             that.cbCancel.call(that.env);
 
         });

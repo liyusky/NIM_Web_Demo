@@ -442,7 +442,7 @@ var ExtendInfomessages = {
     var _self = this;
     $.ajax({
       url: url,
-      type:'POST',
+      type:'GET',
       data:{
         'uid':_self.user,
         'appkey':window.CONFIG
